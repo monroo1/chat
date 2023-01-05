@@ -1,0 +1,12 @@
+.header {
+  background-color: rgb(21, 101, 192);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  color: white;
+
+  &-logo {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,36 @@
+.message {
+  background-color: rgba(122, 198, 241, 0.2);
+  max-width: 40%;
+  align-self: flex-end;
+  padding: 12px 18px;
+  border-radius: 12px;
+
+  &-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 8px;
+
+    &__author {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    &__date {
+      font-size: 12px;
+      font-weight: bold;
+      color: rgb(82, 85, 85);
+    }
+  }
+  &-text {
+    & > p {
+      word-wrap: anywhere;
+      margin: 0;
+    }
+  }
+}
+
+.message-from {
+  align-self: flex-start;
+  background-color: rgba(115, 124, 130, 0.2);
+}

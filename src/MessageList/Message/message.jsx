@@ -1,7 +1,9 @@
 import { format } from "date-fns";
+import { SvgIcon } from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import "./message.scss";
 
-const Message = ({ message }) => {
+const Message = ({ message, handleEditMessage, handleDeleteMessage }) => {
   const classList =
     message.author !== "User" ? "message message-from" : "message";
 
@@ -15,6 +17,20 @@ const Message = ({ message }) => {
       </div>
       <div className="message-text">
         <p>{message.message}</p>
+        <div className="message-text__contoll">
+          <SvgIcon
+            sx={{ cursor: "pointer" }}
+            onClick={() => handleDeleteMessage(message)}
+          >
+            <DeleteForeverIcon color="disabled" fontSize="small" />
+          </SvgIcon>
+          <div
+            className="message-text__contoll-edit"
+            onClick={() => handleEditMessage(message)}
+          >
+            edit
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -70,13 +70,17 @@ const MessageList = () => {
   useEffect(() => {
     const listener = ({ code }) => {
       if (code === "Escape") {
-        navigate("/chat");
+        if (editStatus) {
+          handleEditMessageCancel();
+        } else {
+          navigate("/chat");
+        }
       }
     };
     document.addEventListener("keydown", listener);
 
     return () => document.removeEventListener("keydown", listener);
-  }, [navigate]);
+  }, [navigate, editStatus]);
 
   return (
     roomId && (

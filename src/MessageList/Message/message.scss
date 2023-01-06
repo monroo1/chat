@@ -27,6 +27,19 @@
       word-wrap: anywhere;
       margin: 0;
     }
+
+    &__contoll {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+
+      &-edit {
+        font-size: 12px;
+        color: grey;
+        cursor: pointer;
+      }
+    }
   }
 }
 

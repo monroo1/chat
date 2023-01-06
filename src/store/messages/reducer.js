@@ -1,10 +1,20 @@
-import { SEND_MESSAGE } from "./types";
+import { nanoid } from "nanoid";
+import { EDIT_MESSAGE, SEND_MESSAGE, DELETE_MESSAGE } from "./types";
 import { DELETE_CONVERSATION } from "../types";
 
 const inititalState = {
   messages: {
-    react: [{ date: new Date(), author: "andrey", message: "text test" }],
-    js: [{ date: new Date(), author: "bot", message: "asdasd test" }],
+    react: [
+      {
+        id: nanoid(),
+        date: new Date(),
+        author: "andrey",
+        message: "text test",
+      },
+    ],
+    js: [
+      { id: nanoid(), date: new Date(), author: "bot", message: "asdasd test" },
+    ],
   },
 };
 
@@ -18,6 +28,7 @@ export const messagesReducer = (state = inititalState, action) => {
           [action.payload.roomId]: [
             ...(state.messages[action.payload.roomId] ?? []),
             {
+              id: nanoid(),
               date: new Date(),
               author: action.payload.message.author,
               message: action.payload.message.message,
@@ -29,6 +40,30 @@ export const messagesReducer = (state = inititalState, action) => {
       delete state.messages[action.payload];
       return {
         ...state,
+      };
+    case EDIT_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          [action.payload.roomId]: state.messages[action.payload.roomId].map(
+            (el) => {
+              return el.id === action.payload.id
+                ? { ...el, message: action.payload.value, isEdit: true }
+                : el;
+            }
+          ),
+        },
+      };
+    case DELETE_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          [action.payload.roomId]: state.messages[action.payload.roomId].filter(
+            (el) => el.id !== action.payload.id
+          ),
+        },
       };
     default:
       return state;

@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { messagesSelector, sendMessage } from "../store/messages";
+import { messagesSelector, sendMessageBot } from "../store/messages";
+import { inputSelector, changeInputValue } from "../store/conversations";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Message from "./Message/message";
@@ -15,11 +16,10 @@ const MessageList = () => {
   const dispatch = useDispatch();
   const { roomId } = useParams();
   const messages = useSelector(messagesSelector(roomId));
-  const [input, setInput] = useState("");
+  const value = useSelector(inputSelector(roomId));
 
-  const handleSendMessages = async () => {
-    await dispatch(sendMessage({ author: "add", message: input }, roomId));
-    setInput("");
+  const handleSendMessages = () => {
+    dispatch(sendMessageBot({ author: "User", message: value }, roomId));
 
     ref.current.scrollTo({
       top: ref.current.scrollHeight,
@@ -62,8 +62,10 @@ const MessageList = () => {
               label="Введите сообщение"
               variant="standard"
               onKeyDown={handlePressEnter}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={value}
+              onChange={(e) =>
+                dispatch(changeInputValue(e.target.value, roomId))
+              }
             />
             <Icon
               style={{ cursor: "pointer" }}

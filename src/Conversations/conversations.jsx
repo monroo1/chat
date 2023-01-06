@@ -31,7 +31,7 @@ const ConversationItem = ({ element }) => {
           <>
             {!!lastMessage && (
               <span style={{ fontSize: 12 + "px", fontWeight: 600 }}>
-                {format(lastMessage.date, "k:mm")}
+                {format(new Date(lastMessage.date), "k:mm")}
               </span>
             )}
             <IconButton
@@ -63,7 +63,7 @@ const Conversations = () => {
   const handleCreateConversation = () => {
     const name = prompt("Введите название чата:");
     if (!!name) {
-      const isValidName = conversations.includes(name);
+      const isValidName = conversations.find((el) => el.name === name);
 
       !isValidName
         ? dispatch(createConversation(name))
@@ -86,7 +86,7 @@ const Conversations = () => {
         <div className="chats-list">
           <List component="nav" aria-label="mailbox folders">
             {conversations.map((element, id) => (
-              <ConversationItem key={id} element={element} />
+              <ConversationItem key={id} element={element.name} />
             ))}
           </List>
         </div>

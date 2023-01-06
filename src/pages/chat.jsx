@@ -12,7 +12,7 @@ const ChatPage = () => {
   let { roomId } = useParams();
 
   useEffect(() => {
-    const isRoom = rooms.includes(roomId);
+    const isRoom = rooms.find((el) => el.name === roomId);
     !isRoom && navigate("/chat");
   }, [roomId]);
 

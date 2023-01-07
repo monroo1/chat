@@ -63,7 +63,6 @@ export const conversationsReducer = (state = inititalState, action) => {
         conversationsLoading: false,
         conversationsError: action.payload,
       };
-
     case POST_CONVERSATION_START:
       return {
         ...state,

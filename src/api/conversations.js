@@ -7,6 +7,6 @@ export const getConversationsApi = () => {
 };
 
 export const addConversationApi = (roomId) => {
-  const db = getDatabase();
-  return push(ref(db, "conversations"), { name: roomId, inputValue: "" });
+  const dbRef = ref(getDatabase());
+  return push(child(dbRef, "conversations"), { name: roomId, inputValue: "" });
 };

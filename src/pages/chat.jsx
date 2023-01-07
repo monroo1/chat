@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { Routes, Route, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { conversationsSelector } from "../store/conversations";
+
 import { getConversationsFB } from "../store/conversations";
+import { getMessagesFB } from "../store/messages";
 
 import MessageList from "../components/MessageList/messageList";
 import Conversations from "../components/Conversations/conversations";
@@ -20,6 +22,7 @@ export const ChatPage = () => {
 
   useEffect(() => {
     dispatch(getConversationsFB());
+    dispatch(getMessagesFB());
   }, []);
 
   return (

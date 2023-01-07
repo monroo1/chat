@@ -5,6 +5,7 @@ import {
   sendMessageBot,
   editMessage,
   deleteMessage,
+  addMessageFB,
 } from "../../store/messages";
 import { inputSelector, changeInputValue } from "../../store/conversations";
 import { useNavigate, useParams } from "react-router-dom";
@@ -28,7 +29,9 @@ const MessageList = () => {
   const value = useSelector(inputSelector(roomId));
 
   const handleSendMessages = () => {
-    dispatch(sendMessageBot({ author: "User", message: value }, roomId));
+    dispatch(
+      addMessageFB(roomId, { author: "User", message: value, date: new Date() })
+    );
 
     ref.current.scrollTo({
       top: ref.current.scrollHeight,
@@ -46,7 +49,6 @@ const MessageList = () => {
   };
 
   const handleEditMessage = (message) => {
-    console.log(message);
     setEditStatus(true);
     dispatch(changeInputValue(message.message, roomId));
     setEditMessageId(message.id);

@@ -5,8 +5,8 @@ import {
   sendMessageBot,
   editMessage,
   deleteMessage,
-} from "../store/messages";
-import { inputSelector, changeInputValue } from "../store/conversations";
+} from "../../store/messages";
+import { inputSelector, changeInputValue } from "../../store/conversations";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Message from "./Message/message";

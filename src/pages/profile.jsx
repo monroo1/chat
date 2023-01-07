@@ -7,7 +7,7 @@ import {
   changeUserName,
 } from "../store/profile";
 
-const Profile = () => {
+export const Profile = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
 
@@ -41,5 +41,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;

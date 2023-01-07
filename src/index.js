@@ -8,7 +8,7 @@ import { persistor } from "./store/create-store";
 
 import App from "./App";
 import { ChatPage, Profile } from "./pages";
-import MessageList from "./MessageList/messageList";
+import MessageList from "./components/MessageList/messageList";
 
 import "./index.css";
 

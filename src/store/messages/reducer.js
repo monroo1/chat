@@ -4,7 +4,7 @@ import { DELETE_CONVERSATION } from "../types";
 
 const inititalState = {
   messages: {
-    react: [
+    room1: [
       {
         id: nanoid(),
         date: new Date(),
@@ -12,7 +12,7 @@ const inititalState = {
         message: "text test",
       },
     ],
-    js: [
+    room2: [
       { id: nanoid(), date: new Date(), author: "bot", message: "asdasd test" },
     ],
   },

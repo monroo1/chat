@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { conversationsSelector } from "../store/conversations";
-import { createConversation, deleteConversation } from "../store/conversations";
-import { messagesSelector } from "../store/messages";
+import { conversationsSelector } from "../../store/conversations";
+import {
+  createConversation,
+  deleteConversation,
+  addConversationsFB,
+} from "../../store/conversations";
+import { messagesSelector } from "../../store/messages";
+
 import {
   Divider,
   Paper,
@@ -66,7 +71,7 @@ const Conversations = () => {
       const isValidName = conversations.find((el) => el.name === name);
 
       !isValidName
-        ? dispatch(createConversation(name))
+        ? dispatch(addConversationsFB(name))
         : alert("Такая комната уже существует!");
     } else {
       alert("Невалидное название команты!");

@@ -47,3 +47,23 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.auth-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.auth-form__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 250px;
+}
+
+.auth-form__content-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

@@ -1,4 +1,4 @@
-import Profile from "./profile";
-import ChatPage from "./chat";
-
-export { Profile, ChatPage };
+export * from "./profile";
+export * from "./chat";
+export * from "./login";
+export * from "./signup";

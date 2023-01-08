@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth } from "./api/firebase";
 
 import Header from "./components/Header/header";
 import { PublickRoute, PrivateRoute } from "./components/route";

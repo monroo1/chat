@@ -1,12 +1,4 @@
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  remove,
-  set,
-  update,
-} from "firebase/database";
+import { getDatabase, ref, child, get, remove, set } from "firebase/database";
 
 export const getConversationsApi = () => {
   const dbRef = ref(getDatabase());
@@ -27,15 +19,15 @@ export const deleteConversationApi = (roomId) => {
   return remove(conversation);
 };
 
-export const editInputValueApi = (value, roomId) => {
-  const db = getDatabase();
+// export const editInputValueApi = (value, roomId) => {
+//   const db = getDatabase();
 
-  const postData = {
-    name: roomId,
-    inputValue: value,
-  };
+//   const postData = {
+//     name: roomId,
+//     inputValue: value,
+//   };
 
-  const updates = {};
-  updates[`/conversations/${roomId}`] = postData;
-  return update(ref(db), updates);
-};
+//   const updates = {};
+//   updates[`/conversations/${roomId}`] = postData;
+//   return update(ref(db), updates);
+// };

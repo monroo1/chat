@@ -8,9 +8,9 @@ import {
   deleteConversationsStart,
   deleteConversationsSuccess,
   deleteConversationsError,
-  patchConversationsStart,
-  patchConversationsError,
-  patchConversationsSuccess,
+  // patchConversationsStart,
+  // patchConversationsError,
+  // patchConversationsSuccess,
 } from "./actions";
 
 export const getConversationsFB = () => async (dispatch, _, api) => {
@@ -55,15 +55,15 @@ export const deleteConversationFB = (roomId) => async (dispatch, _, api) => {
   }
 };
 
-export const editConversationFB =
-  (value, roomId) => async (dispatch, _, api) => {
-    try {
-      dispatch(patchConversationsStart());
+// export const editConversationFB =
+//   (value, roomId) => async (dispatch, _, api) => {
+//     try {
+//       dispatch(patchConversationsStart());
 
-      await api.editInputValueApi(value, roomId);
+//       await api.editInputValueApi(value, roomId);
 
-      dispatch(patchConversationsSuccess(value, roomId));
-    } catch (e) {
-      dispatch(patchConversationsError(e));
-    }
-  };
+//       dispatch(patchConversationsSuccess(value, roomId));
+//     } catch (e) {
+//       dispatch(patchConversationsError(e));
+//     }
+//   };

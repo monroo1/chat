@@ -6,9 +6,6 @@ import {
   POST_CONVERSATION_ERROR,
   POST_CONVERSATION_START,
   POST_CONVERSATION_SUCCESS,
-  PATCH_CONVERSATION_INPUT_SUCCESS,
-  PATCH_CONVERSATION_INPUT_START,
-  PATCH_CONVERSATION_INPUT_ERROR,
 } from "./types";
 import {
   DELETE_CONVERSATION_START,
@@ -27,8 +24,8 @@ const inititalState = {
   conversationDeleteLoading: false,
   conversationDeleteError: null,
 
-  conversationEditLoading: false,
-  conversationEditError: null,
+  // conversationEditLoading: false,
+  // conversationEditError: null,
 };
 
 export const conversationsReducer = (state = inititalState, action) => {
@@ -101,30 +98,28 @@ export const conversationsReducer = (state = inititalState, action) => {
         conversationDeleteLoading: false,
         conversationDeleteError: action.payload,
       };
-    case PATCH_CONVERSATION_INPUT_START:
-      return {
-        ...state,
-        conversationEditLoading: true,
-        conversationEditError: null,
-      };
-    case PATCH_CONVERSATION_INPUT_SUCCESS:
-      return {
-        ...state,
-        conversationEditLoading: false,
-        conversations: state.conversations.map((el) => {
-          console.log(action.payload.roomId);
-          console.log(action.payload.value);
-          return el.name === action.payload.roomId
-            ? { ...el, inputValue: action.payload.value }
-            : el;
-        }),
-      };
-    case PATCH_CONVERSATION_INPUT_ERROR:
-      return {
-        ...state,
-        conversationEditLoading: false,
-        conversationEditError: action.payload,
-      };
+    // case PATCH_CONVERSATION_INPUT_START:
+    //   return {
+    //     ...state,
+    //     conversationEditLoading: true,
+    //     conversationEditError: null,
+    //   };
+    // case PATCH_CONVERSATION_INPUT_SUCCESS:
+    //   return {
+    //     ...state,
+    //     conversationEditLoading: false,
+    //     conversations: state.conversations.map((el) => {
+    //       return el.name === action.payload.roomId
+    //         ? { ...el, inputValue: action.payload.value }
+    //         : el;
+    //     }),
+    //   };
+    // case PATCH_CONVERSATION_INPUT_ERROR:
+    //   return {
+    //     ...state,
+    //     conversationEditLoading: false,
+    //     conversationEditError: action.payload,
+    //   };
     default:
       return state;
   }

@@ -6,12 +6,13 @@ import {
   getConversationsApi,
   addConversationApi,
   deleteConversationApi,
-  editInputValueApi,
 } from "../api/conversations";
 import {
   getMessageApi,
   addMessageApi,
   deleteMessageRoomApi,
+  deleteMessageApi,
+  editMessageApi,
 } from "../api/messages";
 import { logger } from "./middlewares";
 import { profileReducer } from "./profile";
@@ -40,11 +41,13 @@ export const store = createStore(
       thunk.withExtraArgument({
         getConversationsApi,
         addConversationApi,
-        editInputValueApi,
+        // editInputValueApi,
         getMessageApi,
         addMessageApi,
         deleteConversationApi,
         deleteMessageRoomApi,
+        deleteMessageApi,
+        editMessageApi,
       })
     ),
     window.__REDUX_DEVTOOLS_EXTENSION__

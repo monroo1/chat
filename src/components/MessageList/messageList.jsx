@@ -1,23 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   messagesSelector,
-  editMessage,
-  deleteMessage,
+  patchMessageFB,
   addMessageFB,
+  deleteMessageFB,
 } from "../../store/messages";
-import {
-  editConversationFB,
-  inputSelector,
-  changeInputValue,
-} from "../../store/conversations";
-import {
-  useHref,
-  useInRouterContext,
-  useNavigate,
-  useParams,
-  useResolvedPath,
-} from "react-router-dom";
+import { inputSelector, changeInputValue } from "../../store/conversations";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Message from "./Message/message";
 import { TextField, Divider, Icon } from "@mui/material";
@@ -34,7 +24,6 @@ const MessageList = () => {
   const [editStatus, setEditStatus] = useState(false);
   const [editMessageId, setEditMessageId] = useState(null);
   const { roomId } = useParams();
-  const href = useResolvedPath();
   const messages = useSelector(messagesSelector(roomId));
   const value = useSelector(inputSelector(roomId));
 
@@ -61,22 +50,22 @@ const MessageList = () => {
   const handleEditMessage = (message) => {
     setEditStatus(true);
     dispatch(changeInputValue(message.message, roomId));
-    setEditMessageId(message.id);
+    setEditMessageId(message);
   };
 
-  const handleEditMessageCancel = () => {
+  const handleEditMessageCancel = useCallback(() => {
     setEditStatus(false);
     dispatch(changeInputValue("", roomId));
     setEditMessageId(null);
-  };
+  }, [dispatch, roomId]);
 
   const handleEditMessageSave = () => {
-    dispatch(editMessage(value, editMessageId, roomId));
+    dispatch(patchMessageFB(value, editMessageId, roomId));
     handleEditMessageCancel();
   };
 
   const handleDeleteMessage = (message) => {
-    dispatch(deleteMessage(message.id, roomId));
+    dispatch(deleteMessageFB(message.id, roomId));
   };
 
   useEffect(() => {
@@ -92,11 +81,7 @@ const MessageList = () => {
     document.addEventListener("keydown", listener);
 
     return () => document.removeEventListener("keydown", listener);
-  }, [navigate, editStatus]);
-
-  useEffect(() => {
-    dispatch(editConversationFB(value, roomId));
-  }, [roomId]);
+  }, [navigate, editStatus, handleEditMessageCancel]);
 
   return (
     roomId && (

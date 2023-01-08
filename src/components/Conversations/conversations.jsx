@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { conversationsSelector } from "../../store/conversations";
 import {
-  createConversation,
   deleteConversationFB,
   addConversationsFB,
 } from "../../store/conversations";

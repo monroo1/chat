@@ -12,6 +12,7 @@ const Message = ({ message, handleEditMessage, handleDeleteMessage }) => {
       <div className="message-top">
         <span className="message-top__author">{message.author}</span>
         <span className="message-top__date">
+          {!!message.isEdit && "ред.  "}
           {format(new Date(message.date), "k:mm")}
         </span>
       </div>

@@ -3,9 +3,9 @@ import {
   ref,
   child,
   get,
-  push,
   set,
   remove,
+  update,
 } from "firebase/database";
 
 export const getMessageApi = () => {
@@ -27,4 +27,26 @@ export const deleteMessageRoomApi = (roomId) => {
   const db = getDatabase();
   const messages = ref(db, `messages/${roomId}`);
   return remove(messages);
+};
+
+export const deleteMessageApi = (id, roomId) => {
+  const db = getDatabase();
+
+  const message = ref(db, `messages/${roomId}/${id}`);
+  return remove(message);
+};
+
+export const editMessageApi = (value, message, roomId) => {
+  const db = getDatabase();
+
+  const postData = {
+    ...message,
+    message: value,
+    isEdit: true,
+  };
+
+  const updates = {};
+  updates[`/messages/${roomId}/${message.id}`] = postData;
+
+  return update(ref(db), updates);
 };

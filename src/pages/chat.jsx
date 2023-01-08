@@ -18,12 +18,12 @@ export const ChatPage = () => {
   useEffect(() => {
     const isRoom = rooms.find((el) => el.name === roomId);
     !isRoom && navigate("/chat");
-  }, [roomId, rooms]);
+  }, [roomId, rooms, navigate]);
 
   useEffect(() => {
     dispatch(getConversationsFB());
     dispatch(getMessagesFB());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="app-content">

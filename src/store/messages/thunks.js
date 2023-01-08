@@ -6,6 +6,12 @@ import {
   postMessageStart,
   postMessageSuccess,
   postMessageError,
+  deleteMessageStart,
+  deleteMessageSuccess,
+  deleteMessageError,
+  patchMessageStart,
+  patchMessageSuccess,
+  patchMessageError,
 } from "./actions";
 import { changeInputValue } from "../conversations";
 
@@ -60,5 +66,30 @@ export const addMessageFB =
       }
     } catch (e) {
       dispatch(postMessageError(e));
+    }
+  };
+
+export const deleteMessageFB = (id, roomId) => async (dispatch, _, api) => {
+  try {
+    dispatch(deleteMessageStart());
+
+    await api.deleteMessageApi(id, roomId);
+
+    dispatch(deleteMessageSuccess(id, roomId));
+  } catch (e) {
+    dispatch(deleteMessageError(e));
+  }
+};
+
+export const patchMessageFB =
+  (value, message, roomId) => async (dispatch, _, api) => {
+    try {
+      dispatch(patchMessageStart());
+
+      await api.editMessageApi(value, message, roomId);
+
+      dispatch(patchMessageSuccess(value, message.id, roomId));
+    } catch (e) {
+      dispatch(patchMessageError(e));
     }
   };

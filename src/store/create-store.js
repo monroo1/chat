@@ -2,8 +2,17 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { getConversationsApi, addConversationApi } from "../api/conversations";
-import { getMessageApi, addMessageApi } from "../api/messages";
+import {
+  getConversationsApi,
+  addConversationApi,
+  deleteConversationApi,
+  editInputValueApi,
+} from "../api/conversations";
+import {
+  getMessageApi,
+  addMessageApi,
+  deleteMessageRoomApi,
+} from "../api/messages";
 import { logger } from "./middlewares";
 import { profileReducer } from "./profile";
 import { conversationsReducer } from "./conversations";
@@ -31,8 +40,11 @@ export const store = createStore(
       thunk.withExtraArgument({
         getConversationsApi,
         addConversationApi,
+        editInputValueApi,
         getMessageApi,
         addMessageApi,
+        deleteConversationApi,
+        deleteMessageRoomApi,
       })
     ),
     window.__REDUX_DEVTOOLS_EXTENSION__

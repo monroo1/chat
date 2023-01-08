@@ -1,5 +1,4 @@
 import {
-  CREATE_CONVERSATION,
   CHANGE_INPUT_VALUE,
   GET_CONVERSATIONS_START,
   GET_CONVERSATIONS_SUCCESS,
@@ -7,8 +6,15 @@ import {
   POST_CONVERSATION_ERROR,
   POST_CONVERSATION_START,
   POST_CONVERSATION_SUCCESS,
+  PATCH_CONVERSATION_INPUT_SUCCESS,
+  PATCH_CONVERSATION_INPUT_START,
+  PATCH_CONVERSATION_INPUT_ERROR,
 } from "./types";
-import { DELETE_CONVERSATION } from "../types";
+import {
+  DELETE_CONVERSATION_START,
+  DELETE_CONVERSATION_SUCCESS,
+  DELETE_CONVERSATION_ERROR,
+} from "../types";
 
 const inititalState = {
   conversations: [],
@@ -17,25 +23,16 @@ const inititalState = {
 
   conversationCreateLoading: false,
   conversationCreateError: null,
+
+  conversationDeleteLoading: false,
+  conversationDeleteError: null,
+
+  conversationEditLoading: false,
+  conversationEditError: null,
 };
 
 export const conversationsReducer = (state = inititalState, action) => {
   switch (action.type) {
-    case CREATE_CONVERSATION:
-      return {
-        ...state,
-        conversations: [
-          ...state.conversations,
-          { name: action.payload, inputValue: "" },
-        ],
-      };
-    case DELETE_CONVERSATION:
-      return {
-        ...state,
-        conversations: state.conversations.filter(
-          (element) => element.name !== action.payload
-        ),
-      };
     case CHANGE_INPUT_VALUE:
       return {
         ...state,
@@ -73,13 +70,60 @@ export const conversationsReducer = (state = inititalState, action) => {
       return {
         ...state,
         conversationCreateLoading: false,
-        // conversations: action.payload,
+        conversations: [
+          ...state.conversations,
+          { name: action.payload, inputValue: "" },
+        ],
       };
     case POST_CONVERSATION_ERROR:
       return {
         ...state,
         conversationCreateLoading: false,
         conversationCreateError: action.payload,
+      };
+    case DELETE_CONVERSATION_START:
+      return {
+        ...state,
+        conversationDeleteLoading: true,
+        conversationDeleteError: null,
+      };
+    case DELETE_CONVERSATION_SUCCESS:
+      return {
+        ...state,
+        conversationDeleteLoading: false,
+        conversations: state.conversations.filter(
+          (element) => element.name !== action.payload
+        ),
+      };
+    case DELETE_CONVERSATION_ERROR:
+      return {
+        ...state,
+        conversationDeleteLoading: false,
+        conversationDeleteError: action.payload,
+      };
+    case PATCH_CONVERSATION_INPUT_START:
+      return {
+        ...state,
+        conversationEditLoading: true,
+        conversationEditError: null,
+      };
+    case PATCH_CONVERSATION_INPUT_SUCCESS:
+      return {
+        ...state,
+        conversationEditLoading: false,
+        conversations: state.conversations.map((el) => {
+          console.log(action.payload.roomId);
+          console.log(action.payload.value);
+          return el.name === action.payload.roomId
+            ? { ...el, inputValue: action.payload.value }
+            : el;
+        }),
+      };
+    case PATCH_CONVERSATION_INPUT_ERROR:
+      return {
+        ...state,
+        conversationEditLoading: false,
+        conversationEditError: action.payload,
       };
     default:
       return state;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { conversationsSelector } from "../../store/conversations";
 import {
   createConversation,
-  deleteConversation,
+  deleteConversationFB,
   addConversationsFB,
 } from "../../store/conversations";
 import { messagesSelector } from "../../store/messages";
@@ -39,10 +39,13 @@ const ConversationItem = ({ element }) => {
                 {format(new Date(lastMessage.date), "k:mm")}
               </span>
             )}
+
             <IconButton
               edge="end"
               aria-label="delete"
-              onClick={() => dispatch(deleteConversation(element))}
+              onClick={() => {
+                dispatch(deleteConversationFB(element));
+              }}
             >
               <DeleteIcon />
             </IconButton>

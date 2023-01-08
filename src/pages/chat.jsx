@@ -18,7 +18,7 @@ export const ChatPage = () => {
   useEffect(() => {
     const isRoom = rooms.find((el) => el.name === roomId);
     !isRoom && navigate("/chat");
-  }, [roomId]);
+  }, [roomId, rooms]);
 
   useEffect(() => {
     dispatch(getConversationsFB());

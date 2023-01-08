@@ -7,8 +7,6 @@ const Message = ({ message, handleEditMessage, handleDeleteMessage }) => {
   const classList =
     message.author !== "User" ? "message message-from" : "message";
 
-  console.log(message);
-
   return (
     <div className={classList}>
       <div className="message-top">

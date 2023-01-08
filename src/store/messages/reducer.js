@@ -1,7 +1,5 @@
-import { nanoid } from "nanoid";
 import {
   EDIT_MESSAGE,
-  SEND_MESSAGE,
   DELETE_MESSAGE,
   GET_MESSAGES_START,
   GET_MESSAGES_SUCCESS,
@@ -10,7 +8,7 @@ import {
   POST_MESSAGE_SUCCESS,
   POST_MESSAGE_ERROR,
 } from "./types";
-import { DELETE_CONVERSATION } from "../types";
+import { DELETE_CONVERSATION_SUCCESS } from "../types";
 
 const inititalState = {
   messages: {},
@@ -23,27 +21,6 @@ const inititalState = {
 
 export const messagesReducer = (state = inititalState, action) => {
   switch (action.type) {
-    case SEND_MESSAGE:
-      return {
-        ...state,
-        messages: {
-          ...state.messages,
-          [action.payload.roomId]: [
-            ...(state.messages[action.payload.roomId] ?? []),
-            {
-              id: nanoid(),
-              date: new Date(),
-              author: action.payload.message.author,
-              message: action.payload.message.message,
-            },
-          ],
-        },
-      };
-    case DELETE_CONVERSATION:
-      delete state.messages[action.payload];
-      return {
-        ...state,
-      };
     case EDIT_MESSAGE:
       return {
         ...state,
@@ -96,6 +73,18 @@ export const messagesReducer = (state = inititalState, action) => {
       return {
         ...state,
         addMessageLoading: false,
+        messages: {
+          ...state.messages,
+          [action.payload.roomId]: [
+            ...(state.messages[action.payload.roomId] ?? []),
+            {
+              id: action.payload.message.id,
+              date: new Date(),
+              author: action.payload.message.author,
+              message: action.payload.message.message,
+            },
+          ],
+        },
       };
     case POST_MESSAGE_ERROR:
       return {
@@ -103,6 +92,9 @@ export const messagesReducer = (state = inititalState, action) => {
         addMessageLoading: true,
         addMessageError: action.payload,
       };
+    case DELETE_CONVERSATION_SUCCESS:
+      delete state.messages[action.payload];
+      return { ...state };
     default:
       return state;
   }

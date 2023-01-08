@@ -2,13 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   messagesSelector,
-  sendMessageBot,
   editMessage,
   deleteMessage,
   addMessageFB,
 } from "../../store/messages";
-import { inputSelector, changeInputValue } from "../../store/conversations";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  editConversationFB,
+  inputSelector,
+  changeInputValue,
+} from "../../store/conversations";
+import {
+  useHref,
+  useInRouterContext,
+  useNavigate,
+  useParams,
+  useResolvedPath,
+} from "react-router-dom";
 
 import Message from "./Message/message";
 import { TextField, Divider, Icon } from "@mui/material";
@@ -25,6 +34,7 @@ const MessageList = () => {
   const [editStatus, setEditStatus] = useState(false);
   const [editMessageId, setEditMessageId] = useState(null);
   const { roomId } = useParams();
+  const href = useResolvedPath();
   const messages = useSelector(messagesSelector(roomId));
   const value = useSelector(inputSelector(roomId));
 
@@ -83,6 +93,10 @@ const MessageList = () => {
 
     return () => document.removeEventListener("keydown", listener);
   }, [navigate, editStatus]);
+
+  useEffect(() => {
+    dispatch(editConversationFB(value, roomId));
+  }, [roomId]);
 
   return (
     roomId && (

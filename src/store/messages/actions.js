@@ -1,5 +1,4 @@
 import {
-  SEND_MESSAGE,
   EDIT_MESSAGE,
   DELETE_MESSAGE,
   GET_MESSAGES_START,
@@ -9,11 +8,6 @@ import {
   POST_MESSAGE_SUCCESS,
   POST_MESSAGE_ERROR,
 } from "./types";
-
-export const sendMessage = (message, roomId) => ({
-  type: SEND_MESSAGE,
-  payload: { message, roomId },
-});
 
 export const editMessage = (value, id, roomId) => ({
   type: EDIT_MESSAGE,
@@ -43,8 +37,9 @@ export const postMessageStart = () => ({
   type: POST_MESSAGE_START,
 });
 
-export const postMessageSuccess = () => ({
+export const postMessageSuccess = (message, roomId) => ({
   type: POST_MESSAGE_SUCCESS,
+  payload: { message, roomId },
 });
 
 export const postMessageError = (error) => ({

@@ -1,5 +1,12 @@
-import { nanoid } from "nanoid";
-import { getDatabase, ref, child, get, push } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  push,
+  set,
+  remove,
+} from "firebase/database";
 
 export const getMessageApi = () => {
   const dbRef = ref(getDatabase());
@@ -7,11 +14,17 @@ export const getMessageApi = () => {
 };
 
 export const addMessageApi = (roomId, message) => {
-  const dbRef = ref(getDatabase());
-  return push(child(dbRef, `messages/${roomId}`), {
-    id: nanoid(),
+  const db = getDatabase();
+  return set(ref(db, `messages/${roomId}/${message.id}`), {
+    id: message.id,
     date: message.dateString,
     author: message.author,
     message: message.message,
   });
+};
+
+export const deleteMessageRoomApi = (roomId) => {
+  const db = getDatabase();
+  const messages = ref(db, `messages/${roomId}`);
+  return remove(messages);
 };

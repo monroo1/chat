@@ -15,13 +15,14 @@ import {
 } from "./actions";
 import { changeInputValue } from "../conversations";
 
-export const sendMessageBot = (roomId) => async (dispatch, _) => {
+export const sendMessageBot = (roomId, length) => async (dispatch, _) => {
   const dateSting = new Date();
   dispatch(
     addMessageFB(roomId, {
       message: "Hello from bot with thunk",
       author: "Bot",
       date: dateSting.toString(),
+      length: length + 1,
     })
   );
 };
@@ -44,7 +45,7 @@ export const getMessagesFB = () => async (dispatch, _, api) => {
 };
 
 export const addMessageFB =
-  (roomId, { message, author, date }) =>
+  (roomId, { message, author, date, length }) =>
   async (dispatch, _, api) => {
     try {
       dispatch(postMessageStart());
@@ -57,12 +58,13 @@ export const addMessageFB =
         message,
         author,
         dateString,
+        length: length + 1,
       });
 
       dispatch(postMessageSuccess({ id, message, author, dateString }, roomId));
       dispatch(changeInputValue("", roomId));
       if (author !== "Bot") {
-        dispatch(sendMessageBot(roomId));
+        dispatch(sendMessageBot(roomId, length));
       }
     } catch (e) {
       dispatch(postMessageError(e));

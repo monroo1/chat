@@ -27,9 +27,16 @@ const MessageList = () => {
   const messages = useSelector(messagesSelector(roomId));
   const value = useSelector(inputSelector(roomId));
 
+  const length = messages.length;
+
   const handleSendMessages = () => {
     dispatch(
-      addMessageFB(roomId, { author: "User", message: value, date: new Date() })
+      addMessageFB(roomId, {
+        author: "User",
+        message: value,
+        date: new Date(),
+        length: length,
+      })
     );
 
     ref.current.scrollTo({

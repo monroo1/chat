@@ -6,6 +6,7 @@ import {
   set,
   remove,
   update,
+  setPriority,
 } from "firebase/database";
 
 export const getMessageApi = () => {
@@ -15,12 +16,17 @@ export const getMessageApi = () => {
 
 export const addMessageApi = (roomId, message) => {
   const db = getDatabase();
-  return set(ref(db, `messages/${roomId}/${message.id}`), {
+  // console.log(message.length);
+
+  set(ref(db, `messages/${roomId}/${message.id}`), {
     id: message.id,
     date: message.dateString,
     author: message.author,
     message: message.message,
   });
+
+  const messageRef = ref(db, `messages/${roomId}/${message.id}`);
+  setPriority(messageRef, message.length);
 };
 
 export const deleteMessageRoomApi = (roomId) => {

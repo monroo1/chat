@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./api/firebase";
 
 import Header from "./components/Header/header";
 import { PublickRoute, PrivateRoute } from "./components/route";
@@ -10,8 +11,8 @@ function App() {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    const authApp = auth;
+    onAuthStateChanged(authApp, (user) => {
       if (user) {
         setSession(user);
       } else {

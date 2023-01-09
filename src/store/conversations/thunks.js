@@ -30,17 +30,19 @@ export const getConversationsFB = () => async (dispatch, _, api) => {
   }
 };
 
-export const addConversationsFB = (roomId) => async (dispatch, _, api) => {
-  try {
-    dispatch(postConversationsStart());
+export const addConversationsFB =
+  (roomId) => async (dispatch, getState, api) => {
+    const priority = getState().conversations.conversations.length + 1;
+    try {
+      dispatch(postConversationsStart());
 
-    await api.addConversationApi(roomId);
+      await api.addConversationApi(roomId, priority);
 
-    dispatch(postConversationsSuccess(roomId));
-  } catch (e) {
-    dispatch(postConversationsError(e));
-  }
-};
+      dispatch(postConversationsSuccess(roomId));
+    } catch (e) {
+      dispatch(postConversationsError(e));
+    }
+  };
 
 export const deleteConversationFB = (roomId) => async (dispatch, _, api) => {
   try {

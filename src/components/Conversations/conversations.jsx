@@ -27,39 +27,52 @@ const ConversationItem = ({ element }) => {
   const lastMessage = messages.at(-1);
 
   return (
-    <Link to={"chat/" + element}>
-      <ListItem
-        button
-        divider
-        secondaryAction={
-          <>
-            {!!lastMessage && (
-              <span style={{ fontSize: 12 + "px", fontWeight: 600 }}>
-                {format(new Date(lastMessage.date), "k:mm")}
-              </span>
-            )}
-
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => {
-                dispatch(deleteConversationFB(element));
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
-        }
+    <div style={{ position: "relative" }} onClick={(e) => e.stopPropagation()}>
+      <div
+        style={{
+          position: "absolute",
+          right: 12 + "px",
+          bottom: 0,
+          zIndex: 999,
+        }}
+        onClick={(e) => dispatch(deleteConversationFB(element))}
       >
-        <ListItemText
-          primary={element}
-          secondary={
-            !!lastMessage &&
-            lastMessage.author + ": " + lastMessage.message.slice(0, 20)
+        <IconButton edge="end" aria-label="delete">
+          <DeleteIcon fontSize="small" />
+        </IconButton>
+      </div>
+      <Link to={"chat/" + element}>
+        <ListItem
+          button
+          divider
+          secondaryAction={
+            <>
+              {!!lastMessage && (
+                <span
+                  style={{
+                    fontSize: 12 + "px",
+                    fontWeight: 600,
+                    position: "absolute",
+                    top: -20 + "px",
+                    right: -7 + "px",
+                  }}
+                >
+                  {format(new Date(lastMessage.date), "k:mm")}
+                </span>
+              )}
+            </>
           }
-        />
-      </ListItem>
-    </Link>
+        >
+          <ListItemText
+            primary={element}
+            secondary={
+              !!lastMessage &&
+              lastMessage.author + ": " + lastMessage.message.slice(0, 20)
+            }
+          />
+        </ListItem>
+      </Link>
+    </div>
   );
 };
 

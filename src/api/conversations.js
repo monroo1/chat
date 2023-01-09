@@ -6,6 +6,7 @@ import {
   remove,
   set,
   update,
+  setPriority,
 } from "firebase/database";
 
 export const getConversationsApi = () => {
@@ -14,12 +15,14 @@ export const getConversationsApi = () => {
 };
 
 export const addConversationApi = (roomId, priority) => {
-  console.log("priority ", priority);
   const db = getDatabase();
-  return set(ref(db, `conversations/${roomId}`), {
+  set(ref(db, `conversations/${roomId}`), {
     name: roomId,
     inputValue: "",
   });
+
+  const conversationRef = ref(db, `conversations/${roomId}`);
+  return setPriority(conversationRef, priority);
 };
 
 export const deleteConversationApi = (roomId) => {

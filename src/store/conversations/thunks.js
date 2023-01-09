@@ -8,9 +8,9 @@ import {
   deleteConversationsStart,
   deleteConversationsSuccess,
   deleteConversationsError,
-  // patchConversationsStart,
-  // patchConversationsError,
-  // patchConversationsSuccess,
+  patchConversationsStart,
+  patchConversationsError,
+  patchConversationsSuccess,
 } from "./actions";
 
 export const getConversationsFB = () => async (dispatch, _, api) => {
@@ -55,15 +55,20 @@ export const deleteConversationFB = (roomId) => async (dispatch, _, api) => {
   }
 };
 
-// export const editConversationFB =
-//   (value, roomId) => async (dispatch, _, api) => {
-//     try {
-//       dispatch(patchConversationsStart());
+export const editConversationFB =
+  (roomId) => async (dispatch, getState, api) => {
+    const value =
+      getState().conversations.conversations.filter(
+        (el) => el.name === roomId
+      )[0].inputValue ?? "";
 
-//       await api.editInputValueApi(value, roomId);
+    try {
+      dispatch(patchConversationsStart());
 
-//       dispatch(patchConversationsSuccess(value, roomId));
-//     } catch (e) {
-//       dispatch(patchConversationsError(e));
-//     }
-//   };
+      await api.editInputValueApi(value, roomId);
+
+      dispatch(patchConversationsSuccess(value, roomId));
+    } catch (e) {
+      dispatch(patchConversationsError(e));
+    }
+  };

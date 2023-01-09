@@ -6,7 +6,11 @@ import {
   addMessageFB,
   deleteMessageFB,
 } from "../../store/messages";
-import { inputSelector, changeInputValue } from "../../store/conversations";
+import {
+  inputSelector,
+  changeInputValue,
+  editConversationFB,
+} from "../../store/conversations";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Message from "./Message/message";
@@ -74,6 +78,16 @@ const MessageList = () => {
   const handleDeleteMessage = (message) => {
     dispatch(deleteMessageFB(message.id, roomId));
   };
+
+  useEffect(() => {
+    if (!!roomId) {
+      dispatch(editConversationFB(roomId));
+    }
+  }, [roomId]);
+
+  useEffect(() => {
+    return () => dispatch(editConversationFB(roomId));
+  }, []);
 
   useEffect(() => {
     const listener = ({ code }) => {

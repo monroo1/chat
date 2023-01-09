@@ -6,6 +6,7 @@ import {
   getConversationsApi,
   addConversationApi,
   deleteConversationApi,
+  editInputValueApi,
 } from "../api/conversations";
 import {
   getMessageApi,
@@ -41,7 +42,7 @@ export const store = createStore(
       thunk.withExtraArgument({
         getConversationsApi,
         addConversationApi,
-        // editInputValueApi,
+        editInputValueApi,
         getMessageApi,
         addMessageApi,
         deleteConversationApi,

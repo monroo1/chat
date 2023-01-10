@@ -16,7 +16,6 @@ export const getMessageApi = () => {
 
 export const addMessageApi = (roomId, message) => {
   const db = getDatabase();
-  // console.log(message.length);
 
   set(ref(db, `messages/${roomId}/${message.id}`), {
     id: message.id,

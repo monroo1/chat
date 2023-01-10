@@ -58,11 +58,17 @@ export const deleteConversationFB = (roomId) => async (dispatch, _, api) => {
 };
 
 export const editConversationFB =
-  (roomId) => async (dispatch, getState, api) => {
-    const value =
-      getState().conversations.conversations.filter(
-        (el) => el.name === roomId
-      )[0].inputValue ?? "";
+  (roomId, val) => async (dispatch, getState, api) => {
+    let value;
+
+    if (val === "") {
+      value = val;
+    } else {
+      value =
+        getState().conversations.conversations.filter(
+          (el) => el.name === roomId
+        )[0].inputValue ?? "";
+    }
 
     try {
       dispatch(patchConversationsStart());

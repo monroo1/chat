@@ -13,7 +13,7 @@ import {
   patchMessageSuccess,
   patchMessageError,
 } from "./actions";
-import { changeInputValue } from "../conversations";
+import { editConversationFB, changeInputValue } from "../conversations";
 
 export const sendMessageBot = (roomId, length) => async (dispatch, _) => {
   const dateSting = new Date();
@@ -52,6 +52,7 @@ export const addMessageFB =
 
       const dateString = date.toString();
       const id = nanoid();
+      const val = "";
 
       await api.addMessageApi(roomId, {
         id,
@@ -63,6 +64,8 @@ export const addMessageFB =
 
       dispatch(postMessageSuccess({ id, message, author, dateString }, roomId));
       dispatch(changeInputValue("", roomId));
+      dispatch(editConversationFB(roomId, val));
+
       if (author !== "Bot") {
         dispatch(sendMessageBot(roomId, length));
       }
